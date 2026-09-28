@@ -1,0 +1,11 @@
+[importlinter]
+root_package = gi_surrogate
+
+[importlinter:contract:layers]
+name = Слои: training -> data -> models -> (eval | utils); импорт вверх запрещён
+type = layers
+layers =
+    gi_surrogate.training
+    gi_surrogate.data
+    gi_surrogate.models
+    gi_surrogate.eval | gi_surrogate.utils
