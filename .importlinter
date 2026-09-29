@@ -9,3 +9,16 @@ layers =
     gi_surrogate.data
     gi_surrogate.models
     gi_surrogate.eval | gi_surrogate.utils
+
+[importlinter:contract:no-legacy]
+name = Запрет на возврат устаревших архитектур (CfC/hybrid/NRD/GRU/ODE-LSTM), даже если кто-то скопирует файл обратно
+type = forbidden
+source_modules =
+    gi_surrogate
+forbidden_modules =
+    gi_surrogate.models.cfc_probe_module
+    gi_surrogate.models.temporal
+    gi_surrogate.models.gru_baseline
+    gi_surrogate.models.ode_lstm_baseline
+    gi_surrogate.models.nrd
+    gi_surrogate.eval.hybrid
