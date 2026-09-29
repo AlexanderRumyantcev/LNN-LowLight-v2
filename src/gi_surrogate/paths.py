@@ -13,6 +13,8 @@ OUTPUT_DIR = REPO_ROOT / "outputs"                  # результаты ло�
 DEFAULT_DATASET = DATA_DIR / "generate_dataset_zeroday_result_nostep_v1.npz"
 # 16-сидовые nrc_strong@{16,64} из TZ_stage8: MLP-референс, не переобучается (TZ_stage11 §2.3)
 TZ8_KAN_RESULTS = REFERENCE_DIR / "run_capacity_sweep_zeroday_kan_results.json"
+# гипотеза 1 (weight_decay для nrc_strong@64) — вход для hypothesis1b (сравнение подходов)
+HYPOTHESIS1_RESULTS = REFERENCE_DIR / "run_hypothesis1_reg_nrc_strong_results.json"
 
 
 def resolve_out_path(filename, out_dir=None):
