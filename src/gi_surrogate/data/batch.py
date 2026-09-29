@@ -1,7 +1,7 @@
 """
 dense_batch_core.py — TZ_stage11 (26.09.2026, чат): облегчённая копия
 минимально необходимого подмножества run_experiment.py::build_batch/
-_stack_feature, run_experiment_dense.py::build_batch_dense/_get_spatial/
+_stack_feature, run_experiment_dense.py::build_batch_dense/get_spatial/
 SPATIAL_DIM и run_hybrid_v0.py::_slice_mse.
 
 ПОЧЕМУ ДУБЛИКАТ, А НЕ ИМПОРТ: run_experiment_dense.py и run_hybrid_v0.py на
@@ -88,8 +88,8 @@ def build_batch_dense(seqs, indices):
     return batch
 
 
-def _get_spatial(batch, device):
-    """Идентично run_experiment_dense.py::_get_spatial."""
+def get_spatial(batch, device):
+    """Идентично run_experiment_dense.py::get_spatial."""
     return build_spatial_conditioning(
         batch["position"].to(device), batch["direction"].to(device),
         batch["normal"].to(device), batch["albedo"].to(device),

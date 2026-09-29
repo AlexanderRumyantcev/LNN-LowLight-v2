@@ -232,3 +232,27 @@ def slice_mse(preds_kind, true, disocc_flags, n_eval):
             stable_vals.append(float(np.mean(s_c)))
     return (float(np.mean(disocc_vals)) if disocc_vals else float("nan"),
             float(np.mean(stable_vals)) if stable_vals else float("nan"))
+
+
+def slice_mse_by_brightness(preds_kind, true, n_eval, dark_threshold):
+    """Аналог _slice_mse (run_hybrid_v0.py), но срез по яркости (dark_vs_
+    bright_mse, evaluation/metrics.py), не по disocclusion_flag — доп.
+    диагностика, добавлена по ходу разговора 13.09.2026 (см. TZ_stage8,
+    addendum к §3.8), НЕ входит в пре-регистрированный §4 decision rule."""
+    dark_vals, bright_vals = [], []
+    for p in range(n_eval):
+        pred_p = preds_kind[p].astype(np.float64)
+        true_p = true[p].astype(np.float64)
+        d_c, b_c = [], []
+        for c in range(pred_p.shape[-1]):
+            split = dark_vs_bright_mse(pred_p[:, c], true_p[:, c], dark_threshold)
+            if not np.isnan(split["dark"]):
+                d_c.append(split["dark"])
+            if not np.isnan(split["bright"]):
+                b_c.append(split["bright"])
+        if d_c:
+            dark_vals.append(float(np.mean(d_c)))
+        if b_c:
+            bright_vals.append(float(np.mean(b_c)))
+    return (float(np.mean(dark_vals)) if dark_vals else float("nan"),
+            float(np.mean(bright_vals)) if bright_vals else float("nan"))

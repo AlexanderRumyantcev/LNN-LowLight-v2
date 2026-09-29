@@ -139,17 +139,17 @@ def test_disocclusion_slice_feeds_into_paired_bootstrap():
     paired_bootstrap_significance без переделки API."""
     rng = np.random.default_rng(0)
     n_seeds = MIN_N_SEEDS
-    errors_cfc = []
+    errors_model_a = []
     errors_honest = []
     for seed in range(n_seeds):
         r = np.random.default_rng(seed)
-        pred_cfc = r.normal(0, 0.5, size=50)
+        pred_model_a = r.normal(0, 0.5, size=50)
         pred_honest = r.normal(0, 1.0, size=50)
         true = np.zeros(50)
         flag = r.integers(0, 2, size=50).astype(bool)
-        errors_cfc.append(disocclusion_vs_stable_mse(pred_cfc, true, flag)["disocclusion"])
+        errors_model_a.append(disocclusion_vs_stable_mse(pred_model_a, true, flag)["disocclusion"])
         errors_honest.append(disocclusion_vs_stable_mse(pred_honest, true, flag)["disocclusion"])
 
-    result = paired_bootstrap_significance(np.array(errors_honest), np.array(errors_cfc))
+    result = paired_bootstrap_significance(np.array(errors_honest), np.array(errors_model_a))
     assert "significant" in result
     assert result["n_seeds"] == n_seeds
